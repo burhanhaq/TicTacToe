@@ -13,6 +13,7 @@ class _GamePageState extends State<GamePage> {
         color: Theme.of(context).accentColor,
         child: Column(
           children: <Widget>[
+            SizedBox(height: 40.0),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: Text(
@@ -26,18 +27,17 @@ class _GamePageState extends State<GamePage> {
               ),
             ),
             SizedBox(height: 30.0),
-            Container(
-              decoration: BoxDecoration(color: Colors.white),
-              child: Expanded(
-                child: GridView.count(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  crossAxisSpacing: 3,
-                  mainAxisSpacing: 3,
-                  crossAxisCount: 3,
-                  children: List.generate(9, (_) {
-                    return card();
-                  }),
-                ),
+            Flexible(
+              fit: FlexFit.loose,
+              child: GridView.count(
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                crossAxisSpacing: 3,
+                mainAxisSpacing: 3,
+                crossAxisCount: 3,
+                children: List.generate(9, (_) {
+                  return card();
+                }),
               ),
             )
           ],
