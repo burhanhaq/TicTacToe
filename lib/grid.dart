@@ -27,33 +27,33 @@ class _GridState extends State<Grid> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                CardPlaceholder(cardID: 0),
+                SizedBox(width: spacing),
                 CardPlaceholder(cardID: 1),
                 SizedBox(width: spacing),
                 CardPlaceholder(cardID: 2),
-                SizedBox(width: spacing),
-                CardPlaceholder(cardID: 3),
               ],
             ),
             SizedBox(height: spacing),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                CardPlaceholder(cardID: 3),
+                SizedBox(width: spacing),
                 CardPlaceholder(cardID: 4),
                 SizedBox(width: spacing),
                 CardPlaceholder(cardID: 5),
-                SizedBox(width: spacing),
-                CardPlaceholder(cardID: 6),
               ],
             ),
             SizedBox(height: spacing),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                CardPlaceholder(cardID: 6),
+                SizedBox(width: spacing),
                 CardPlaceholder(cardID: 7),
                 SizedBox(width: spacing),
                 CardPlaceholder(cardID: 8),
-                SizedBox(width: spacing),
-                CardPlaceholder(cardID: 9),
               ],
             ),
           ],
@@ -65,7 +65,9 @@ class _GridState extends State<Grid> {
 
 class CardPlaceholder extends StatefulWidget {
   final int cardID;
+
   CardPlaceholder({@required this.cardID});
+
   @override
   _CardPlaceholderState createState() => _CardPlaceholderState();
 }
@@ -73,6 +75,7 @@ class CardPlaceholder extends StatefulWidget {
 class _CardPlaceholderState extends State<CardPlaceholder> {
   IconData pieceIcon;
   Color iconColor;
+
   @override
   Widget build(BuildContext context) {
     double cardSize = MediaQuery.of(context).size.width / 3.2;
@@ -80,15 +83,22 @@ class _CardPlaceholderState extends State<CardPlaceholder> {
     Turn currentTurn = gameState.turn;
     return GestureDetector(
       onTap: () {
+        bool gameOver;
+        // Add piece to board if we can
         if (pieceIcon == null) {
           pieceIcon = currentTurn == Turn.P1
               ? Icons.close
               : Icons.radio_button_unchecked;
           iconColor = currentTurn == Turn.P1 ? Colors.green : Colors.red;
-          gameState.changeTurn();
-          gameState.invertTranslateValue();
+          gameState.addPiece(widget.cardID);
+          gameOver = gameState.isGameOver();
+          if (!gameOver) {
+            gameState.changeTurn();
+            gameState.invertTranslateValue();
+          }
         }
-        if (gameState.turn == Turn.Gameover) {
+
+        if (gameOver) {
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text('Player XYZ won, resetting game state...'),
             backgroundColor: Colors.transparent,

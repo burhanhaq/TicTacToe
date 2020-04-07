@@ -15,7 +15,7 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ChangeNotifierProvider(
-        create: (context) => GameState(),
+        create: (context) => GameState()..initializeGameBoard(),
         child: Scaffold(
           body: Container(
             color: Theme.of(context).accentColor,
