@@ -164,6 +164,7 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
   void dispose() {
     // TODO: implement dispose
     controller.dispose();
+    controller2.dispose();
     super.dispose();
   }
 }

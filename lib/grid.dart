@@ -88,6 +88,12 @@ class _CardPlaceholderState extends State<CardPlaceholder> {
           gameState.changeTurn();
           gameState.invertTranslateValue();
         }
+        if (gameState.turn == Turn.Gameover) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text('Player XYZ won, resetting game state...'),
+            backgroundColor: Colors.transparent,
+          ));
+        }
       },
       child: Container(
         height: cardSize,
