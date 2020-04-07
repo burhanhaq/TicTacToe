@@ -12,13 +12,14 @@ class Grid extends StatefulWidget {
 class _GridState extends State<Grid> {
   @override
   Widget build(BuildContext context) {
+    final double linesLength = MediaQuery.of(context).size.width / 1.2;
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
         Container(
           color: Colors.white,
-          height: 250,
-          width: 250,
+          height: linesLength,
+          width: linesLength,
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -72,6 +73,7 @@ class _CardPlaceholderState extends State<CardPlaceholder> {
   Color iconColor;
   @override
   Widget build(BuildContext context) {
+    double cardSize = MediaQuery.of(context).size.width / 3.2;
     final gameState = Provider.of<GameState>(context);
     Turn currentTurn = gameState.turn;
     return GestureDetector(
@@ -88,8 +90,9 @@ class _CardPlaceholderState extends State<CardPlaceholder> {
         }
       },
       child: Container(
-        height: 100,
-        width: 100,
+        height: cardSize,
+        width: cardSize,
+//        color: Colors.red,
         color: Theme.of(context).accentColor,
         child: Icon(
           pieceIcon,
