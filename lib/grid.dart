@@ -27,33 +27,33 @@ class _GridState extends State<Grid> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CardPlaceholder(),
+                CardPlaceholder(cardID: 1),
                 SizedBox(width: spacing),
-                CardPlaceholder(),
+                CardPlaceholder(cardID: 2),
                 SizedBox(width: spacing),
-                CardPlaceholder()
+                CardPlaceholder(cardID: 3),
               ],
             ),
             SizedBox(height: spacing),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CardPlaceholder(),
+                CardPlaceholder(cardID: 4),
                 SizedBox(width: spacing),
-                CardPlaceholder(),
+                CardPlaceholder(cardID: 5),
                 SizedBox(width: spacing),
-                CardPlaceholder()
+                CardPlaceholder(cardID: 6),
               ],
             ),
             SizedBox(height: spacing),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CardPlaceholder(),
+                CardPlaceholder(cardID: 7),
                 SizedBox(width: spacing),
-                CardPlaceholder(),
+                CardPlaceholder(cardID: 8),
                 SizedBox(width: spacing),
-                CardPlaceholder()
+                CardPlaceholder(cardID: 9),
               ],
             ),
           ],
@@ -64,6 +64,8 @@ class _GridState extends State<Grid> {
 }
 
 class CardPlaceholder extends StatefulWidget {
+  final int cardID;
+  CardPlaceholder({@required this.cardID});
   @override
   _CardPlaceholderState createState() => _CardPlaceholderState();
 }
@@ -84,9 +86,7 @@ class _CardPlaceholderState extends State<CardPlaceholder> {
               : Icons.radio_button_unchecked;
           iconColor = currentTurn == Turn.P1 ? Colors.green : Colors.red;
           gameState.changeTurn();
-//          gameState.turn = currentTurn;
           gameState.invertTranslateValue();
-//          gameState.translateValue = gameState.translateValue;
         }
       },
       child: Container(

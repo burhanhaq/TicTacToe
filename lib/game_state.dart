@@ -4,7 +4,7 @@ import 'constants.dart';
 
 class GameState with ChangeNotifier {
   Turn _turn = Turn.P1;
-  double _translateValue = -60;
+  double _translateValue = -110;
 
   Turn get turn => _turn;
   void changeTurn() {

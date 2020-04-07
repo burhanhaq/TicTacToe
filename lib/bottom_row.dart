@@ -5,6 +5,11 @@ import 'game_state.dart';
 
 class BottomRow extends StatelessWidget {
   final double iconSize = 80.0;
+  final IconData iconP1 = Icons.close;
+  final Color colorP1 = Colors.green;
+  final IconData iconP2 = Icons.radio_button_unchecked;
+  final Color colorP2 = Colors.red;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GameState>(
@@ -25,7 +30,7 @@ class BottomRow extends StatelessWidget {
                     Container(
                       color: Colors.green,
                       height: 3.0,
-                      width: 100.0,
+                      width: 150.0,
                     ),
                     SizedBox(height: 18),
                   ],
@@ -39,26 +44,47 @@ class BottomRow extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Icon(iconP1, color: colorP1),
+                  Row(
+                    children: <Widget>[
+                      Icon(iconP1, color: colorP1),
+                      Icon(iconP1, color: colorP1),
+                    ],
+                  ),
+                  Icon(iconP1, color: colorP1),
+                ],
+              ),
+//              SizedBox(width: 10),
               Container(
-//                    width: 100,
-//                    height: 40,
                 child: Icon(
-                  Icons.close,
-                  color: Colors.green,
+                  iconP1,
+                  color: colorP1,
                   size: iconSize,
                 ),
               ),
               SizedBox(width: 40),
               Container(
-//                    width: 100,
-//                    height: 40,
                 child: Icon(
-                  Icons.radio_button_unchecked,
-                  color: Colors.red,
+                  iconP2,
+                  color: colorP2,
                   size: iconSize,
                 ),
+              ),
+              Column(
+                children: <Widget>[
+                  Icon(iconP2, color: colorP2),
+                  Row(
+                    children: <Widget>[
+                      Icon(iconP2, color: colorP2),
+                      Icon(iconP2, color: colorP2),
+                    ],
+                  ),
+                  Icon(iconP2, color: colorP2),
+                ],
               ),
             ],
           ),
@@ -78,7 +104,7 @@ class BottomRow extends StatelessWidget {
                     Container(
                       color: Colors.green,
                       height: 3.0,
-                      width: 100.0,
+                      width: 150.0,
                     ),
                   ],
                 ),
