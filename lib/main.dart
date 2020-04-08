@@ -21,8 +21,9 @@ class _AppState extends State<App> {
         accentColor: Colors.grey[800],
       ),
       home: ChangeNotifierProvider(
-          create: (context) => GameState()..resetGame(),
-          child: GamePage()),
+        create: (context) => GameState()..resetGame(),
+        child: GamePage(),
+      ),
     );
   }
 }

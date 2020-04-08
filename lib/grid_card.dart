@@ -10,6 +10,7 @@ class GridCard extends StatefulWidget {
   IconData playerIcon;
   Color playerColor;
   double opacity = 0.0;
+  bool canRotate = false;
 
   GridCard({@required this.cardID});
 
@@ -21,35 +22,37 @@ class _GridCardState extends State<GridCard>
     with SingleTickerProviderStateMixin {
   AnimationController iconRotationController;
   Animation animation;
+  AnimationStatus animStatus = AnimationStatus.dismissed;
 
   @override
   void initState() {
     super.initState();
     iconRotationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1000))
+        AnimationController(vsync: this, duration: Duration(milliseconds: 2000))
           ..addListener(() => setState(() {}));
-    animation = Tween(begin: 0.0, end: 8.0).animate(iconRotationController);
-    animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-//        iconRotationController.reverse();
-//        iconRotationController.forward();
-      }
-      print(iconRotationController.value);
-    });
+    animation = Tween(begin: 0.0, end: 10.0).animate(iconRotationController)
+      ..addListener(() {
+//        setState(() {});
+      })
+      ..addStatusListener((status) {
+        animStatus = status;
+      });
   }
 
   @override
   Widget build(BuildContext context) {
     double cardSize = MediaQuery.of(context).size.width / 3.2;
     final gameState = Provider.of<GameState>(context);
-    if (gameState.winner != Turn.None) {
-//      print('Value before: ${iconRotationController.value}');
-//      iconRotationController.value = 0;
-//      print('Value after: ${iconRotationController.value}');
-//
-//      print('Wrong place');
-      iconRotationController.forward();
-
+    if (gameState.winner == Turn.P1 || gameState.winner == Turn.P2) {
+      if (!iconRotationController.isAnimating) {
+        if (animStatus == AnimationStatus.dismissed) {
+          iconRotationController.forward();
+          print('going forward');
+        } else {
+          iconRotationController.reverse();
+          print('going reverse');
+        }
+      }
     }
     return GestureDetector(
       onTap: () {
@@ -75,7 +78,7 @@ class _GridCardState extends State<GridCard>
           Scaffold.of(context).showSnackBar(SnackBar(
             content: RichText(
               text: TextSpan(
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 40),
                 children: gameState.currentTurn == Turn.Draw
                     ? <TextSpan>[
                         TextSpan(
@@ -104,8 +107,13 @@ class _GridCardState extends State<GridCard>
             height: cardSize,
             width: cardSize,
             color: Theme.of(context).accentColor,
-            child: Transform.rotate(
-              angle: 2 * math.pi * animation.value,
+            child: Transform(
+              alignment: FractionalOffset.center,
+              transform: Matrix4.identity()
+                ..rotateY(
+                  math.pi * animation.value * (widget.canRotate ? 1.0 : 0.0),
+                ),
+//              angle: 2 * math.pi * animation.value,
               child: Icon(
                 widget.playerIcon,
                 size: 60,

@@ -9,20 +9,12 @@ class GameState with ChangeNotifier {
   double _translateValue = -110;
   int _cardsFilled = 0;
   Turn _winner = Turn.None;
-  final gridCards = [
-//    GridCard(cardID: 0),
-//    GridCard(cardID: 1),
-//    GridCard(cardID: 2),
-//    GridCard(cardID: 3),
-//    GridCard(cardID: 4),
-//    GridCard(cardID: 5),
-//    GridCard(cardID: 6),
-//    GridCard(cardID: 7),
-//    GridCard(cardID: 8),
-  ];
+  final gridCards = [];
 
   Turn get currentTurn => _turn;
+
   double get translateValue => _translateValue;
+
   Turn get winner => _winner;
   var _gameBoard = [];
 
@@ -46,7 +38,18 @@ class GameState with ChangeNotifier {
   void addPiece(int index) {
     ++_cardsFilled;
     _gameBoard[index] = _turn;
-    notifyListeners();
+//    notifyListeners();
+  }
+
+  void _setWinningCards(int one, int two, int three) {
+    gridCards[one].opacity = kOpacityLevel;
+    gridCards[two].opacity = kOpacityLevel;
+    gridCards[three].opacity = kOpacityLevel;
+
+    gridCards[one].canRotate = true;
+    gridCards[two].canRotate = true;
+    gridCards[three].canRotate = true;
+//    notifyListeners();
   }
 
   bool isGameOver() {
@@ -55,71 +58,80 @@ class GameState with ChangeNotifier {
     if (_gameBoard[0] == _gameBoard[1] &&
         _gameBoard[1] == _gameBoard[2] &&
         _gameBoard[2] == _turn) {
-      gridCards[0].opacity = kOpacityLevel;
-      gridCards[1].opacity = kOpacityLevel;
-      gridCards[2].opacity = kOpacityLevel;
+//      gridCards[0].opacity = kOpacityLevel;
+//      gridCards[1].opacity = kOpacityLevel;
+//      gridCards[2].opacity = kOpacityLevel;
+      _setWinningCards(0, 1, 2);
       gameOver = true;
       // bottom row
     } else if (_gameBoard[6] == _gameBoard[7] &&
         _gameBoard[7] == _gameBoard[8] &&
         _gameBoard[8] == _turn) {
-      gridCards[6].opacity = kOpacityLevel;
-      gridCards[7].opacity = kOpacityLevel;
-      gridCards[8].opacity = kOpacityLevel;
+//      gridCards[6].opacity = kOpacityLevel;
+//      gridCards[7].opacity = kOpacityLevel;
+//      gridCards[8].opacity = kOpacityLevel;
+
+      _setWinningCards(6, 7, 8);
       gameOver = true;
     }
     // left column
     else if (_gameBoard[0] == _gameBoard[3] &&
         _gameBoard[3] == _gameBoard[6] &&
         _gameBoard[6] == _turn) {
-      gridCards[0].opacity = kOpacityLevel;
-      gridCards[3].opacity = kOpacityLevel;
-      gridCards[6].opacity = kOpacityLevel;
+//      gridCards[0].opacity = kOpacityLevel;
+//      gridCards[3].opacity = kOpacityLevel;
+//      gridCards[6].opacity = kOpacityLevel;
+      _setWinningCards(0, 3, 6);
       gameOver = true;
     }
     // right column
     else if (_gameBoard[2] == _gameBoard[5] &&
         _gameBoard[5] == _gameBoard[8] &&
         _gameBoard[8] == _turn) {
-      gridCards[2].opacity = kOpacityLevel;
-      gridCards[5].opacity = kOpacityLevel;
-      gridCards[8].opacity = kOpacityLevel;
+//      gridCards[2].opacity = kOpacityLevel;
+//      gridCards[5].opacity = kOpacityLevel;
+//      gridCards[8].opacity = kOpacityLevel;
+      _setWinningCards(2, 5, 8);
       gameOver = true;
     }
     // middle column
     else if (_gameBoard[1] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[7] &&
         _gameBoard[7] == _turn) {
-      gridCards[1].opacity = kOpacityLevel;
-      gridCards[4].opacity = kOpacityLevel;
-      gridCards[7].opacity = kOpacityLevel;
+//      gridCards[1].opacity = kOpacityLevel;
+//      gridCards[4].opacity = kOpacityLevel;
+//      gridCards[7].opacity = kOpacityLevel;
+      _setWinningCards(1, 4, 7);
       gameOver = true;
     }
     // middle row
     else if (_gameBoard[3] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[5] &&
         _gameBoard[5] == _turn) {
-      gridCards[3].opacity = kOpacityLevel;
-      gridCards[4].opacity = kOpacityLevel;
-      gridCards[5].opacity = kOpacityLevel;
+//      gridCards[3].opacity = kOpacityLevel;
+//      gridCards[4].opacity = kOpacityLevel;
+//      gridCards[5].opacity = kOpacityLevel;
+      _setWinningCards(3, 4, 5);
       gameOver = true;
     }
     // top-left to bottom-right diagonal
     else if (_gameBoard[0] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[8] &&
         _gameBoard[8] == _turn) {
-      gridCards[0].opacity = kOpacityLevel;
-      gridCards[4].opacity = kOpacityLevel;
-      gridCards[8].opacity = kOpacityLevel;
+//      gridCards[0].opacity = kOpacityLevel;
+//      gridCards[4].opacity = kOpacityLevel;
+//      gridCards[8].opacity = kOpacityLevel;
+      _setWinningCards(0, 4, 8);
       gameOver = true;
     }
     // top-right to bottom-left diagonal
     else if (_gameBoard[2] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[6] &&
         _gameBoard[6] == _turn) {
-      gridCards[2].opacity = kOpacityLevel;
-      gridCards[4].opacity = kOpacityLevel;
-      gridCards[6].opacity = kOpacityLevel;
+//      gridCards[2].opacity = kOpacityLevel;
+//      gridCards[4].opacity = kOpacityLevel;
+//      gridCards[6].opacity = kOpacityLevel;
+      _setWinningCards(2, 4, 6);
       gameOver = true;
     } else if (_cardsFilled == 9) {
       _turn = Turn.Draw;
