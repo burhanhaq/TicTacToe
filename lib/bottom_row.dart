@@ -42,11 +42,13 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final translateValue = MediaQuery.of(context).size.width / 3.7;
     return Consumer<GameState>(
-      builder: (context, gameState, _) => Column(
+      builder: (context, gameState, _) =>
+          Column(
         children: <Widget>[
           Transform.translate(
-            offset: Offset(gameState.translateValue, 0.0),
+            offset: Offset(translateValue * gameState.translateDirection, 0.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -60,7 +62,8 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
                     Container(
                       color: Colors.green,
                       height: 3.0,
-                      width: 150.0,
+                      width: MediaQuery.of(context).size.width / 2.8,
+//                      width: 150.0,
                     ),
                     SizedBox(height: 18),
                   ],
@@ -97,19 +100,20 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
                   child: Icon(
                     iconP1,
                     color: colorP1,
-                    size: 80,
+                    size: MediaQuery.of(context).size.width / 5,
                   ),
                 ),
               ),
               SizedBox(width: 40),
               FadeTransition(
-                opacity:
-                    gameState.currentTurn == Turn.P2 ? playingAnimation : noAnimation,
+                opacity: gameState.currentTurn == Turn.P2
+                    ? playingAnimation
+                    : noAnimation,
                 child: Container(
                   child: Icon(
                     iconP2,
                     color: colorP2,
-                    size: 80,
+                    size: MediaQuery.of(context).size.width / 5,
                   ),
                 ),
               ),
@@ -118,7 +122,7 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
                   Icon(iconP2, color: colorP2),
                   Row(
                     children: <Widget>[
-                      Icon(iconP2, color: colorP2),
+                      Icon(iconP2, color: colorP2, size: 26),
                       Icon(iconP2, color: colorP2),
                     ],
                   ),
@@ -128,7 +132,7 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
             ],
           ),
           Transform.translate(
-            offset: Offset(gameState.translateValue, 0.0),
+            offset: Offset(translateValue * gameState.translateDirection, 0.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -143,7 +147,7 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
                     Container(
                       color: Colors.green,
                       height: 3.0,
-                      width: 150.0,
+                      width: MediaQuery.of(context).size.width / 2.8,
                     ),
                   ],
                 ),

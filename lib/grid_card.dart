@@ -78,7 +78,7 @@ class _GridCardState extends State<GridCard>
           Scaffold.of(context).showSnackBar(SnackBar(
             content: RichText(
               text: TextSpan(
-                style: TextStyle(fontSize: 40),
+                style: TextStyle(fontSize: 25),
                 children: gameState.currentTurn == Turn.Draw
                     ? <TextSpan>[
                         TextSpan(
@@ -116,7 +116,8 @@ class _GridCardState extends State<GridCard>
 //              angle: 2 * math.pi * animation.value,
               child: Icon(
                 widget.playerIcon,
-                size: 60,
+                size: cardSize * 0.47,
+//                size: 60,
                 color: widget.playerColor,
               ),
             ),

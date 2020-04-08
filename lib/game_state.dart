@@ -6,14 +6,15 @@ import 'grid_card.dart';
 
 class GameState with ChangeNotifier {
   Turn _turn = Turn.P1;
-  double _translateValue = -110;
+//  double _translateValue = -100;
+  double _translateValue = -1;
   int _cardsFilled = 0;
   Turn _winner = Turn.None;
   final gridCards = [];
 
   Turn get currentTurn => _turn;
 
-  double get translateValue => _translateValue;
+  double get translateDirection => _translateValue;
 
   Turn get winner => _winner;
   var _gameBoard = [];
@@ -21,7 +22,7 @@ class GameState with ChangeNotifier {
   void resetGame() {
     _cardsFilled = 0;
     _turn = Turn.P1;
-    _translateValue = -110;
+    _translateValue = -1;
 //    gameOver = false;
     _winner = Turn.None;
     _gameBoard.clear();
