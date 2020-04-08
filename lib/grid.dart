@@ -3,13 +3,11 @@ import 'package:provider/provider.dart';
 
 import 'constants.dart';
 import 'game_state.dart';
-import 'grid_card.dart';
 
 class Grid extends StatefulWidget {
   @override
   _GridState createState() => _GridState();
 }
-
 
 class _GridState extends State<Grid> {
   @override
@@ -31,31 +29,31 @@ class _GridState extends State<Grid> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 gameStateGridCards[0],
-                SizedBox(width: spacing),
+                SizedBox(width: kSpacing),
                 gameStateGridCards[1],
-                SizedBox(width: spacing),
+                SizedBox(width: kSpacing),
                 gameStateGridCards[2],
               ],
             ),
-            SizedBox(height: spacing),
+            SizedBox(height: kSpacing),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 gameStateGridCards[3],
-                SizedBox(width: spacing),
+                SizedBox(width: kSpacing),
                 gameStateGridCards[4],
-                SizedBox(width: spacing),
+                SizedBox(width: kSpacing),
                 gameStateGridCards[5],
               ],
             ),
-            SizedBox(height: spacing),
+            SizedBox(height: kSpacing),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 gameStateGridCards[6],
-                SizedBox(width: spacing),
+                SizedBox(width: kSpacing),
                 gameStateGridCards[7],
-                SizedBox(width: spacing),
+                SizedBox(width: kSpacing),
                 gameStateGridCards[8],
               ],
             ),

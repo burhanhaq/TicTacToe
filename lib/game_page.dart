@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'bottom_row.dart';
 import 'game_state.dart';
 import 'grid.dart';
+import 'constants.dart';
 
 class GamePage extends StatefulWidget {
   @override
@@ -13,11 +14,18 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
+    final gameState = Provider.of<GameState>(context);
     return SafeArea(
-      child: ChangeNotifierProvider(
-        create: (context) => GameState()..resetGame(),
-        child: Scaffold(
-          body: Container(
+      child: Scaffold(
+        body: GestureDetector(
+          onHorizontalDragUpdate: (details) {
+            if (gameState.winner != Turn.None) {
+              if (details.primaryDelta < 0) {
+                gameState.resetGame();
+              }
+            }
+          },
+          child: Container(
             color: Theme.of(context).accentColor,
             child: Align(
               alignment: Alignment.center,
