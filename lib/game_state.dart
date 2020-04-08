@@ -1,61 +1,105 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'constants.dart';
+import 'grid_card.dart';
 
 class GameState with ChangeNotifier {
   Turn _turn = Turn.P1;
   double _translateValue = -110;
-  Turn _winner;
+  int _cardsFilled = 0;
+  final gridCards = [
+    GridCard(cardID: 0),
+    GridCard(cardID: 1),
+    GridCard(cardID: 2),
+    GridCard(cardID: 3),
+    GridCard(cardID: 4),
+    GridCard(cardID: 5),
+    GridCard(cardID: 6),
+    GridCard(cardID: 7),
+    GridCard(cardID: 8),
+  ];
 
-  Turn get turn => _turn;
+
+  Turn get currentTurn => _turn;
 
   double get translateValue => _translateValue;
-  var gameBoard = [];
+  var _gameBoard = [];
 
-  void initializeGameBoard() {
-    gameBoard.clear();
+  void resetGame() {
+    _cardsFilled = 0;
+    _turn = Turn.P1;
+    _gameBoard.clear();
     for (int i = 0; i < 9; i++) {
-      gameBoard.add(Turn.None);
+      _gameBoard.add(Turn.None);
     }
+    for (int i = 0; i < 9; i++) {
+      gridCards[i].playerIcon = null;
+    }
+    notifyListeners();
   }
 
   void addPiece(int index) {
-    gameBoard[index] = _turn;
+    ++_cardsFilled;
+    _gameBoard[index] = _turn;
+    notifyListeners();
   }
 
   bool isGameOver() {
     // top row
-    if (gameBoard[0] == gameBoard[1] &&
-        gameBoard[1] == gameBoard[2] &&
-        gameBoard[2] == _turn) return true;
+    if (_gameBoard[0] == _gameBoard[1] &&
+        _gameBoard[1] == _gameBoard[2] &&
+        _gameBoard[2] == _turn) {
+      return true;
+    }
     // bottom row
-    if (gameBoard[6] == gameBoard[7] &&
-        gameBoard[7] == gameBoard[8] &&
-        gameBoard[8] == _turn) return true;
+    if (_gameBoard[6] == _gameBoard[7] &&
+        _gameBoard[7] == _gameBoard[8] &&
+        _gameBoard[8] == _turn) {
+      return true;
+    }
     // left column
-    if (gameBoard[0] == gameBoard[3] &&
-        gameBoard[3] == gameBoard[6] &&
-        gameBoard[6] == _turn) return true;
+    if (_gameBoard[0] == _gameBoard[3] &&
+        _gameBoard[3] == _gameBoard[6] &&
+        _gameBoard[6] == _turn) {
+      return true;
+    }
     // right column
-    if (gameBoard[2] == gameBoard[5] &&
-        gameBoard[5] == gameBoard[8] &&
-        gameBoard[8] == _turn) return true;
+    if (_gameBoard[2] == _gameBoard[5] &&
+        _gameBoard[5] == _gameBoard[8] &&
+        _gameBoard[8] == _turn) {
+      return true;
+    }
     // middle column
-    if (gameBoard[1] == gameBoard[4] &&
-        gameBoard[4] == gameBoard[7] &&
-        gameBoard[7] == _turn) return true;
+    if (_gameBoard[1] == _gameBoard[4] &&
+        _gameBoard[4] == _gameBoard[7] &&
+        _gameBoard[7] == _turn) {
+      return true;
+    }
     // middle row
-    if (gameBoard[3] == gameBoard[4] &&
-        gameBoard[4] == gameBoard[5] &&
-        gameBoard[5] == _turn) return true;
+    if (_gameBoard[3] == _gameBoard[4] &&
+        _gameBoard[4] == _gameBoard[5] &&
+        _gameBoard[5] == _turn) {
+      return true;
+    }
     // top-left to bottom-right diagonal
-    if (gameBoard[0] == gameBoard[4] &&
-        gameBoard[4] == gameBoard[8] &&
-        gameBoard[8] == _turn) return true;
+    if (_gameBoard[0] == _gameBoard[4] &&
+        _gameBoard[4] == _gameBoard[8] &&
+        _gameBoard[8] == _turn) {
+      return true;
+    }
     // top-right to bottom-left diagonal
-    if (gameBoard[2] == gameBoard[4] &&
-        gameBoard[4] == gameBoard[6] &&
-        gameBoard[6] == _turn) return true;
+    if (_gameBoard[2] == _gameBoard[4] &&
+        _gameBoard[4] == _gameBoard[6] &&
+        _gameBoard[6] == _turn) {
+      return true;
+    }
+    if (_cardsFilled == 9) {
+      _turn = Turn.Draw;
+      notifyListeners();
+      return true;
+    }
+
     return false;
   }
 

@@ -13,7 +13,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ff',
+      title: 'Tic-Tac-Toe',
       theme: ThemeData(
         primaryColor: Colors.grey[200],
         accentColor: Colors.grey[800],

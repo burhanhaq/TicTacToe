@@ -91,7 +91,7 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
 //              SizedBox(width: 10),
               Container(
                 child: FadeTransition(
-                  opacity: gameState.turn == Turn.P1
+                  opacity: gameState.currentTurn == Turn.P1
                       ? playingAnimation
                       : noAnimation,
                   child: Icon(
@@ -104,7 +104,7 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
               SizedBox(width: 40),
               FadeTransition(
                 opacity:
-                    gameState.turn == Turn.P2 ? playingAnimation : noAnimation,
+                    gameState.currentTurn == Turn.P2 ? playingAnimation : noAnimation,
                 child: Container(
                   child: Icon(
                     iconP2,
@@ -162,7 +162,6 @@ class _BottomRowState extends State<BottomRow> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     controller2.dispose();
     super.dispose();
