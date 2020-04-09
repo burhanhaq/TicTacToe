@@ -6,7 +6,6 @@ import 'grid_card.dart';
 
 class GameState with ChangeNotifier {
   Turn _turn = Turn.P1;
-//  double _translateValue = -100;
   double _translateValue = -1;
   int _cardsFilled = 0;
   Turn _winner = Turn.None;
@@ -23,7 +22,6 @@ class GameState with ChangeNotifier {
     _cardsFilled = 0;
     _turn = Turn.P1;
     _translateValue = -1;
-//    gameOver = false;
     _winner = Turn.None;
     _gameBoard.clear();
     gridCards.clear();
@@ -39,7 +37,6 @@ class GameState with ChangeNotifier {
   void addPiece(int index) {
     ++_cardsFilled;
     _gameBoard[index] = _turn;
-//    notifyListeners();
   }
 
   void _setWinningCards(int one, int two, int three) {
@@ -50,7 +47,6 @@ class GameState with ChangeNotifier {
     gridCards[one].canRotate = true;
     gridCards[two].canRotate = true;
     gridCards[three].canRotate = true;
-//    notifyListeners();
   }
 
   bool isGameOver() {
@@ -59,19 +55,12 @@ class GameState with ChangeNotifier {
     if (_gameBoard[0] == _gameBoard[1] &&
         _gameBoard[1] == _gameBoard[2] &&
         _gameBoard[2] == _turn) {
-//      gridCards[0].opacity = kOpacityLevel;
-//      gridCards[1].opacity = kOpacityLevel;
-//      gridCards[2].opacity = kOpacityLevel;
       _setWinningCards(0, 1, 2);
       gameOver = true;
       // bottom row
     } else if (_gameBoard[6] == _gameBoard[7] &&
         _gameBoard[7] == _gameBoard[8] &&
         _gameBoard[8] == _turn) {
-//      gridCards[6].opacity = kOpacityLevel;
-//      gridCards[7].opacity = kOpacityLevel;
-//      gridCards[8].opacity = kOpacityLevel;
-
       _setWinningCards(6, 7, 8);
       gameOver = true;
     }
@@ -79,9 +68,6 @@ class GameState with ChangeNotifier {
     else if (_gameBoard[0] == _gameBoard[3] &&
         _gameBoard[3] == _gameBoard[6] &&
         _gameBoard[6] == _turn) {
-//      gridCards[0].opacity = kOpacityLevel;
-//      gridCards[3].opacity = kOpacityLevel;
-//      gridCards[6].opacity = kOpacityLevel;
       _setWinningCards(0, 3, 6);
       gameOver = true;
     }
@@ -89,9 +75,6 @@ class GameState with ChangeNotifier {
     else if (_gameBoard[2] == _gameBoard[5] &&
         _gameBoard[5] == _gameBoard[8] &&
         _gameBoard[8] == _turn) {
-//      gridCards[2].opacity = kOpacityLevel;
-//      gridCards[5].opacity = kOpacityLevel;
-//      gridCards[8].opacity = kOpacityLevel;
       _setWinningCards(2, 5, 8);
       gameOver = true;
     }
@@ -99,9 +82,6 @@ class GameState with ChangeNotifier {
     else if (_gameBoard[1] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[7] &&
         _gameBoard[7] == _turn) {
-//      gridCards[1].opacity = kOpacityLevel;
-//      gridCards[4].opacity = kOpacityLevel;
-//      gridCards[7].opacity = kOpacityLevel;
       _setWinningCards(1, 4, 7);
       gameOver = true;
     }
@@ -109,9 +89,6 @@ class GameState with ChangeNotifier {
     else if (_gameBoard[3] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[5] &&
         _gameBoard[5] == _turn) {
-//      gridCards[3].opacity = kOpacityLevel;
-//      gridCards[4].opacity = kOpacityLevel;
-//      gridCards[5].opacity = kOpacityLevel;
       _setWinningCards(3, 4, 5);
       gameOver = true;
     }
@@ -119,9 +96,6 @@ class GameState with ChangeNotifier {
     else if (_gameBoard[0] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[8] &&
         _gameBoard[8] == _turn) {
-//      gridCards[0].opacity = kOpacityLevel;
-//      gridCards[4].opacity = kOpacityLevel;
-//      gridCards[8].opacity = kOpacityLevel;
       _setWinningCards(0, 4, 8);
       gameOver = true;
     }
@@ -129,9 +103,6 @@ class GameState with ChangeNotifier {
     else if (_gameBoard[2] == _gameBoard[4] &&
         _gameBoard[4] == _gameBoard[6] &&
         _gameBoard[6] == _turn) {
-//      gridCards[2].opacity = kOpacityLevel;
-//      gridCards[4].opacity = kOpacityLevel;
-//      gridCards[6].opacity = kOpacityLevel;
       _setWinningCards(2, 4, 6);
       gameOver = true;
     } else if (_cardsFilled == 9) {

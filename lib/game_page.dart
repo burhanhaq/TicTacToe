@@ -13,15 +13,31 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
-  double x = 0;
-  double y = 0;
-  double z = 0;
   AnimationController screenLeftFlipResetController;
   Animation screenLeftFlipResetAnimation;
   AnimationStatus animStatus = AnimationStatus.dismissed;
 
-  AnimationController scaleDownController;
-  Animation scaleDownAnimation;
+  AnimationController screenOpacityController;
+  Animation screenOpacityAnimation;
+  double screenScale = 1.0;
+
+  AnimationController titleTranslateController;
+  Animation titleTranslateAnimation;
+
+  AnimationController titleTextSizeController;
+  Animation titleTextSizeAnimation;
+
+  AnimationController playerIconSizeController;
+  Animation playerIconSizeAnimation;
+
+  AnimationController fireIconSizeController;
+  Animation fireIconSizeAnimation;
+
+  AnimationController iconTranslateController;
+  Animation iconTranslateAnimation;
+
+  AnimationController iconOpacityController;
+  Animation iconOpacityAnimation;
 
   @override
   void initState() {
@@ -35,15 +51,74 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
           })
           ..addStatusListener((status) => animStatus = status);
 
-    scaleDownController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1000));
-    scaleDownAnimation =
-        CurvedAnimation(parent: scaleDownController, curve: Curves.elasticOut)
-          ..addListener(() => setState(() {}));
-//        Tween<double>(begin: 1.0, end: 0.0).animate(scaleDownController)
-//          ..addListener(() {
-//            setState(() {});
-//          });
+    screenOpacityController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 500));
+    screenOpacityAnimation =
+//        CurvedAnimation(parent: screenOpacityController, curve: Curves.elasticOut)
+//          ..addListener(() => setState(() {}));
+        Tween<double>(begin: 0.7, end: 0.0).animate(screenOpacityController)
+          ..addListener(() {
+            setState(() {});
+          })
+    ..addStatusListener((status) {
+      if (status == AnimationStatus.completed)
+        screenScale = 0.0;
+    });
+
+
+
+    titleTranslateController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    titleTranslateAnimation = Tween<double>(begin: 0.1, end: 0.4)
+        .animate(titleTranslateController)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    titleTextSizeController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    titleTextSizeAnimation = Tween<double>(begin: 1.0, end: 0.6)
+        .animate(titleTextSizeController)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    playerIconSizeController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    playerIconSizeAnimation = Tween<double>(begin: 1.0, end: 0.5)
+        .animate(playerIconSizeController)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    fireIconSizeController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    fireIconSizeAnimation = Tween<double>(begin: 1.0, end: 2.0)
+        .animate(fireIconSizeController)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    iconTranslateController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    iconTranslateAnimation = Tween<double>(begin: 0.25, end: 0.337)
+        .animate(iconTranslateController)
+      ..addListener(() {
+        setState(() {});
+      })
+    ..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        iconOpacityController.forward();
+      }
+    });
+
+    iconOpacityController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+    iconOpacityAnimation = Tween<double>(begin: 1.0, end: 0.0)
+        .animate(iconOpacityController)
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
   @override
@@ -77,6 +152,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
           },
           onLongPress: () {},
           child: Stack(
+            alignment: Alignment.center,
             children: <Widget>[
               Transform(
                 alignment: FractionalOffset.center,
@@ -93,23 +169,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 40.0),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Hero(
-                            tag: 'title',
-                            child: Text(
-                              'Tic-Tac-Toe',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 30,
-                                decoration: TextDecoration.none,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 30.0),
+                        SizedBox(height: 60.0),
+                        SizedBox(height: 50.0),
                         Grid(),
                         BottomRow(),
                       ],
@@ -119,49 +180,50 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               ),
               GestureDetector(
                 onTap: () {
-                  scaleDownController.forward();
+                  screenOpacityController.forward();
+                  titleTranslateController.forward();
+                  titleTextSizeController.forward();
+                  fireIconSizeController.forward();
+                  playerIconSizeController.forward();
+                  iconTranslateController.forward();
                   print('tapped');
                 },
-                child: Transform(
-                  alignment: FractionalOffset.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(1, 1, 1 - scaleDownAnimation.value),
-//                    ..setEntry(0, 0, scaleDownAnimation.value),
-                  child: Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    color: Colors.grey[800],
-                    child: Center(
-//                      child: Text('Let\'s play!',
-//                          style: TextStyle(
-//                            fontSize: 50,
-//                            color: Theme.of(context).primaryColor,
-//                          )),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Tic-Tac-Toe',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 60,
-                              decoration: TextDecoration.none,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.close, color: Colors.green, size: 120),
-                              Icon(Icons.whatshot, color: Colors.orange, size: 30),
-                              Icon(Icons.radio_button_unchecked,
-                                  color: Colors.red, size: 120),
-                            ],
-                          ),
-                        ],
-                      ),
+                child: Opacity(
+                  opacity: screenOpacityAnimation.value,
+                  child: Transform.scale(
+                    scale: screenScale,
+                    child: Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      color: Colors.grey[900],
                     ),
+                  ),
+                ),
+              ),
+              Transform.translate(
+                offset: Offset(0.0, -MediaQuery.of(context).size.height * titleTranslateAnimation.value), // middle
+                child: Text(
+                  'Tic-Tac-Toe',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 60 * titleTextSizeAnimation.value,
+                    decoration: TextDecoration.none,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ),
+              Transform.translate(
+                offset: Offset(0.0, MediaQuery.of(context).size.height * iconTranslateAnimation.value),
+                child: Opacity(
+                  opacity: iconOpacityAnimation.value,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.close, color: Colors.green, size: 160 * playerIconSizeAnimation.value),
+                      Icon(Icons.whatshot, color: Colors.orange, size: 40 * fireIconSizeAnimation.value), // starting
+                      Icon(Icons.radio_button_unchecked,
+                          color: Colors.red, size: 160 * playerIconSizeAnimation.value),
+                    ],
                   ),
                 ),
               ),
@@ -175,6 +237,11 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   @override
   void dispose() {
     screenLeftFlipResetController.dispose();
+    screenOpacityController.dispose();
+    titleTextSizeController.dispose();
+    titleTranslateController.dispose();
+    playerIconSizeController.dispose();
+    fireIconSizeController.dispose();
     super.dispose();
   }
 }
