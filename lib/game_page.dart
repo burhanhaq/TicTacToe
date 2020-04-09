@@ -169,8 +169,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 60.0),
-                        SizedBox(height: 50.0),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.165),
+//                        SizedBox(height: 110),
                         Grid(),
                         BottomRow(),
                       ],
